@@ -1,28 +1,40 @@
 import { Text, View, TextInput, Image, TouchableOpacity } from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { Link } from '@react-navigation/native';
 
 import '../../global.css';
 
-export default function Login() {
+export default function Signup() {
   const navigation = useNavigation();
   return (
     <SafeAreaProvider>
       <SafeAreaView className='flex-1 justify-between'>
         <View className="pt-4 mx-3">
-          <Text className="text-2xl font-pbold mb-4">Senang bertemu kembali!</Text>
+          <Text className="text-2xl font-pbold mb-4">Selamat Datang di Ngirid!</Text>
           <Text className="text-xl font-pregular mb-1">Username</Text>
           <TextInput
+            className="text-xl w-full border-none bg-gray-300 rounded-full py-3 px-4 mb-4"
+          />
+          <Text className="text-xl font-pregular mb-1">Email</Text>
+          <TextInput
+            // placeholder="Email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
             className="text-xl w-full border-none bg-gray-300 rounded-full py-3 px-4 mb-4"
           />
           <Text className="text-xl font-pregular mb-1">Password</Text>
           <TextInput
             // placeholder="Password"
             secureTextEntry
-            className="text-xl w-full border-none bg-gray-300 rounded-full py-3 px-4"
+            className="text-xl w-full border-none bg-gray-300 rounded-full py-3 px-4 mb-4"
           />
-          <Text className="text-xl text-red-500 font-pregular mb-1">Lupa Password?</Text>
+          <Text className="text-xl font-pregular mb-1">Confirm Password</Text>
+          <TextInput
+            // placeholder="Password"
+            secureTextEntry
+            className="text-xl w-full border-none bg-gray-300 rounded-full py-3 px-4 mb-4"
+          />
         </View>
 
         <View  className='mx-3'>
@@ -32,15 +44,15 @@ export default function Login() {
               source={require('../../assets/images/google.png')}
               className="w-6 h-6 mr-2"
             />
-            <Text className='text-center text-[#CD6D1A] text-2xl font-bold'>Sign-in with Google</Text>
+            <Text className='text-center text-[#CD6D1A] text-2xl font-bold'>Sign-up with Google</Text>
           </TouchableOpacity>
           <TouchableOpacity className='bg-[#CD6D1A] rounded-full p-4 mb-4'
             onPress={() => navigation.navigate('Home')}>
-            <Text className='text-center text-white text-2xl font-bold'>Masuk</Text>
+            <Text className='text-center text-white text-2xl font-bold'>Daftar</Text>
           </TouchableOpacity>
           <TouchableOpacity className='border-4 border-[#CD6D1A] rounded-full p-4 mb-4'
-            onPress={() => navigation.navigate('Signup')}>
-            <Text className='text-center text-[#CD6D1A] text-2xl font-bold'>Belum Punya Akun?</Text>
+            onPress={() => navigation.navigate('Signin')}>
+            <Text className='text-center text-[#CD6D1A] text-2xl font-bold'>Sudah Punya Akun?</Text>
           </TouchableOpacity>
           <View className='gap-3 mt-4'>
             <Text className='text-[10px] text-center font-plight'>
