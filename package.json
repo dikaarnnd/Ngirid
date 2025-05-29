@@ -17,7 +17,7 @@
     "expo": "^53.0.8",
     "expo-font": "~13.3.1",
     "expo-status-bar": "~2.2.3",
-    "nativewind": "latest",
+    "nativewind": "^4.1.23",
     "react": "19.0.0",
     "react-native": "0.79.2",
     "react-native-paper": "^5.14.5",
