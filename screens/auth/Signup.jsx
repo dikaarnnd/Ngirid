@@ -44,15 +44,15 @@ export default function Signup() {
               source={require('../../assets/images/google.png')}
               className="w-6 h-6 mr-2"
             />
-            <Text className='text-center text-[#CD6D1A] text-2xl font-bold'>Sign-up with Google</Text>
+            <Text className='text-center text-[#CD6D1A] text-2xl font-pbold'>Sign-up with Google</Text>
           </TouchableOpacity>
           <TouchableOpacity className='bg-[#CD6D1A] rounded-full p-4 mb-4'
             onPress={() => navigation.navigate('Home')}>
-            <Text className='text-center text-white text-2xl font-bold'>Daftar</Text>
+            <Text className='text-center text-white text-2xl font-pbold'>Daftar</Text>
           </TouchableOpacity>
           <TouchableOpacity className='border-4 border-[#CD6D1A] rounded-full p-4 mb-4'
             onPress={() => navigation.navigate('Signin')}>
-            <Text className='text-center text-[#CD6D1A] text-2xl font-bold'>Sudah Punya Akun?</Text>
+            <Text className='text-center text-[#CD6D1A] text-2xl font-pbold'>Sudah Punya Akun?</Text>
           </TouchableOpacity>
           <View className='gap-3 mt-4'>
             <Text className='text-[10px] text-center font-plight'>
