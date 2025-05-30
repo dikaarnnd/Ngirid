@@ -4,6 +4,8 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 // Components
 import TopBar from '../../components/TopBar';
+import Saldo from '../../components/Saldo';
+import Exp from '../../components/Exp';
 import HistoryList from '../../components/HistoryList';
 
 export default function Home() {
@@ -12,15 +14,22 @@ export default function Home() {
     <SafeAreaProvider>
       <SafeAreaView className='flex-1 justify-between gap-3 mx-3 mb-3'>
         {/* TopBar */}
-        <View className='flex flex-row items-center'>
-          <TopBar />
-        </View>
+          <View className='flex flex-row items-center'>
+            <TopBar />
+          </View>
+        <View className='flex-1 justify-between gap-3'>
+          {/* Saldo */}
+          <Saldo />
 
-        {/* History */}
-        <View className="flex-1 bg-[#8D2B18] rounded-2xl">
-          <Text className="text-sm text-white font-pregular pl-4 my-4">Laporan Keuangan</Text>
-          <View className='flex-1'>
-            <HistoryList showLimit={true} />
+          {/* Pengeluaran */}
+          <Exp />
+
+          {/* History */}
+          <View className="bg-[#8D2B18] rounded-2xl pt-4 pb-2">
+            <Text className="text-sm text-white font-pregular pl-4 mb-3">Laporan Keuangan</Text>
+            <View>
+              <HistoryList showLimit={true} />
+            </View>
           </View>
         </View>
       </SafeAreaView>
