@@ -47,7 +47,7 @@ export default function Signup() {
             <Text className='text-center text-[#CD6D1A] text-2xl font-pbold'>Sign-up with Google</Text>
           </TouchableOpacity>
           <TouchableOpacity className='bg-[#CD6D1A] rounded-full p-4 mb-4'
-            onPress={() => navigation.navigate('Home')}>
+            onPress={() => navigation.replace('MainTabs')}>
             <Text className='text-center text-white text-2xl font-pbold'>Daftar</Text>
           </TouchableOpacity>
           <TouchableOpacity className='border-4 border-[#CD6D1A] rounded-full p-4 mb-4'

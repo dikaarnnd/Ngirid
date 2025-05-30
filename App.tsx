@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import {useFonts} from 'expo-font';
 
 // screens
-import MainLayout from './screens/tabs/MainLayout';
+import MainTabs from './screens/tabs/MainTabs';
 import AuthChoiceScreen from './screens/auth/AuthChoice';
 import LoginScreen from './screens/auth/Login';
 import SignupScreen from './screens/auth/Signup';
@@ -50,7 +50,7 @@ export default function App() {
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="History" component={HistoryScreen} />
-        <Stack.Screen name="MainLayout" component={MainLayout} />
+        <Stack.Screen name="MainTabs" component={MainTabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );
