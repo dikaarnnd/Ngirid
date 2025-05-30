@@ -5,10 +5,12 @@ import { useEffect } from 'react';
 import {useFonts} from 'expo-font';
 
 // screens
+import MainLayout from './screens/tabs/MainLayout';
 import AuthChoiceScreen from './screens/auth/AuthChoice';
 import LoginScreen from './screens/auth/Login';
 import SignupScreen from './screens/auth/Signup';
 import HomeScreen from './screens/tabs/Home';
+import HistoryScreen from './screens/tabs/History';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +49,8 @@ export default function App() {
         <Stack.Screen name="Signin" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="History" component={HistoryScreen} />
+        <Stack.Screen name="MainLayout" component={MainLayout} />
       </Stack.Navigator>
     </NavigationContainer>
   );
