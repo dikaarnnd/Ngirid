@@ -2,17 +2,26 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+// Components
+import TopBar from '../../components/TopBar';
+import HistoryList from '../../components/HistoryList';
+
 export default function Home() {
   const navigation = useNavigation();
   return (
     <SafeAreaProvider>
-      <SafeAreaView className='flex-1'>
-        <View className={styles.container}>
-          <Text className={styles.title}>Home</Text>
-          <TouchableOpacity className='bg-[#CD6D1A] rounded-full p-4 mb-4'
-            onPress={() => navigation.navigate('History')}>
-            <Text className='text-center text-white text-2xl font-pbold'>History</Text>
-          </TouchableOpacity>
+      <SafeAreaView className='flex-1 justify-between gap-3 mx-3 mb-3'>
+        {/* TopBar */}
+        <View className='flex flex-row items-center'>
+          <TopBar />
+        </View>
+
+        {/* History */}
+        <View className="flex-1 bg-[#8D2B18] rounded-2xl">
+          <Text className="text-sm text-white font-pregular pl-4 my-4">Laporan Keuangan</Text>
+          <View className='flex-1'>
+            <HistoryList showLimit={true} />
+          </View>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

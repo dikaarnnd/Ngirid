@@ -27,11 +27,12 @@ export default function HistoryList({ showLimit = false }) {
     { type: 'income', date: '2025-05-20', note: 'Reimburse Kantor', price: 200000 },
   ];
 
-  const displayedData = showLimit ? data.slice(0, 3) : data;
-
-  const sortedData = [...displayedData].sort((a, b) => {
+  
+  const sortedData = [...data].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
+  
+  const displayedData = showLimit ? sortedData.slice(0, 3) : sortedData;
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -67,7 +68,7 @@ export default function HistoryList({ showLimit = false }) {
 
   return (
     <FlatList
-      data={sortedData}
+      data={displayedData}
       keyExtractor={(item) => `${item.note}-${item.date}`}
       renderItem={renderItem}
       showsVerticalScrollIndicator={false}

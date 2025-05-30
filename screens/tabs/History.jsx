@@ -1,7 +1,6 @@
 import { View, Text, Image, TouchableOpacity, TouchableHighlight } from 'react-native'
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
-
 // Components
 import TopBar from '../../components/TopBar';
 import HistoryList from '../../components/HistoryList';
@@ -11,7 +10,7 @@ export default function History() {
     <SafeAreaProvider>
       <SafeAreaView className='flex-1 gap-3 mx-3 mb-3'>
         {/* TopBar */}
-        <View className='flex flex-row justify-between items-center'>
+        <View className='flex flex-row items-center'>
           <TopBar />
         </View>
 
