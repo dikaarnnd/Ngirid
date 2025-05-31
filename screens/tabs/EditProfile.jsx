@@ -14,7 +14,7 @@ export default function EditProfile() {
   const [userData, setUserData] = useState({
     username: 'Darrell',
     email: 'darrell@gmail.com',
-    photoUrl: null, // <-- disimpan di sini
+    photoUrl: null,
     limitExp: '7000000',
   });
 
