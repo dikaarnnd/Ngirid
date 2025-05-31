@@ -1,10 +1,14 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function Header() {
   return (
-    <View>
-      <Text>Header</Text>
-    </View>
+    <SafeAreaProvider>
+        <SafeAreaView>
+            <View>
+        <Text>Header</Text>
+        </View>
+        </SafeAreaView>
+    </SafeAreaProvider>
   )
 }
