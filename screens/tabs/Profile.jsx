@@ -6,10 +6,19 @@ import React from 'react';
 import '../../global.css';
 
 export default function Profile() {
+  
   const navigation = useNavigation();
   const [isSmartTrackingEnabled, setIsSmartTrackingEnabled] = React.useState(false); // State for the switch
-
+  
   const toggleSwitch = () => setIsSmartTrackingEnabled(previousState => !previousState);
+  
+  // Dummy data
+  const userData = {
+    username: 'Darrell',
+    email: 'darrell@gmail.com',
+    photoUrl: null,
+    limit: 1000000,
+  };
 
   return (
     <SafeAreaProvider>
@@ -32,12 +41,17 @@ export default function Profile() {
           <View className='w-28 h-28 justify-center items-center mb-4'>
             {/* Placeholder for profile image, you can replace this with an Image component if you have the user's photo */}
             <Image
-              source={require('../../assets/icons/user.png')} // Ganti dengan path ke gambar avatar default Anda
-              className="w-28 h-28 rounded-full"
+              source={
+                userData.photoUrl
+                  ? { uri: userData.photoUrl }
+                  : require('../../assets/icons/user.png')
+              }
+              className="w-full h-full rounded-full"
+              resizeMode="cover"
             />
           </View>
-          <Text className='text-black text-lg font-psemibold'>Nama Pengguna</Text>
-          <Text className='text-black font-italic text-sm'>e-mail Pengguna</Text>
+          <Text className='text-black text-lg font-psemibold'>{userData.username}</Text>
+          <Text className='text-black font-italic text-sm'>{userData.email}</Text>
         </View>
 
         {/* Options */}

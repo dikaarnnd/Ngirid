@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 // Dummy data
-const user = {
+const userData = {
   username: 'Darrell',
   email: 'darrell@gmail.com',
   photoUrl: null,
@@ -22,20 +22,21 @@ const TopBar = () => {
     <View className="flex flex-row justify-between items-center">
       <View className='flex-1'>
         <Text className="font-pbold text-xl">
-          {`${getGreeting()}, ${user.username}`}
+          {`${getGreeting()}, ${userData.username}`}
         </Text>
         <Text className="font-pregular">Catatlah pengeluaranmu setiap hari!</Text>
       </View>
-      <TouchableOpacity className="w-12 h-12 rounded-full overflow-hidden"
-        onPress={() => navigation.navigate('History')}
+      
+      <TouchableOpacity className="w-12 h-12 overflow-hidden"
+        onPress={() => navigation.navigate('Profile')}
       >
         <Image
           source={
-            user.photoUrl
-              ? { uri: user.photoUrl }
+            userData.photoUrl
+              ? { uri: userData.photoUrl }
               : require('../assets/icons/user.png')
           }
-          className="w-full h-full"
+          className="w-full h-full rounded-full"
           resizeMode="cover"
         />
       </TouchableOpacity>

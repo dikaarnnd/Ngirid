@@ -1,13 +1,77 @@
-import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, Alert } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-
+import { useState, useEffect } from 'react';
+import * as ImagePicker from 'expo-image-picker';
 
 const backArrowIcon = require('../../assets/images/back_arrow.png'); 
 const defaultAvatar = require('../../assets/icons/user.png'); 
 
 export default function EditProfile() {
   const navigation = useNavigation();
+
+  const [userData, setUserData] = useState({
+    username: 'Darrell',
+    email: 'darrell@gmail.com',
+    photoUrl: null, // <-- disimpan di sini
+    limitExp: '7000000',
+  });
+
+
+  const handleChangePhoto = () => {
+    Alert.alert('Pilih Sumber Foto', 'Silakan pilih dari kamera atau galeri', [
+      {
+        text: 'Kamera',
+        onPress: async () => {
+          const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+          if (!permissionResult.granted) {
+            Alert.alert('Izin Ditolak', 'Aplikasi memerlukan akses ke kamera');
+            return;
+          }
+
+          const result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 0.7,
+          });
+
+          if (!result.canceled && result.assets.length > 0) {
+            const selectedImage = result.assets[0];
+            setUserData((prev) => ({ ...prev, photoUrl: selectedImage.uri }));
+          }
+        },
+      },
+      {
+        text: 'Galeri',
+        onPress: handlePickPhoto,
+      },
+      {
+        text: 'Batal',
+        style: 'cancel',
+      },
+    ]);
+  };
+
+
+  const handlePickPhoto = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult.granted) {
+      Alert.alert('Izin Ditolak', 'Aplikasi memerlukan akses ke galeri');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 0.7,
+    });
+
+    if (!result.canceled && result.assets.length > 0) {
+      const selectedImage = result.assets[0];
+      setUserData((prev) => ({ ...prev, photoUrl: selectedImage.uri }));
+    }
+  };
 
   return (
     <SafeAreaProvider>
@@ -23,13 +87,19 @@ export default function EditProfile() {
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
           {/* Profile Picture Section */}
           <View className="items-center mt-8 mb-6">
-            <View className="w-32 h-32 rounded-full justify-center items-center mb-4">
+            <View className="w-32 h-32 justify-center items-center mb-4">
               <Image
-                source={defaultAvatar}
-                className="w-32 h-32 rounded-full"
+                source={
+                  userData.photoUrl
+                    ? { uri: userData.photoUrl }
+                    : defaultAvatar
+                }
+                className="w-full h-full rounded-full"
+                resizeMode="cover"
               />
             </View>
-            <TouchableOpacity className="bg-gray-200 px-6 py-4 rounded-full">
+            <TouchableOpacity className="bg-gray-200 px-6 py-4 rounded-full"
+            onPress={handleChangePhoto}>
               <Text className="text-black font-pregular">Ubah Foto</Text>
             </TouchableOpacity>
           </View>
@@ -41,7 +111,7 @@ export default function EditProfile() {
               <TextInput
                 placeholder="Nama baru..."
                 className="bg-gray-100 p-4 rounded-full text-black"
-                placeholderTextColor="#9CA3AF" // gray-400
+                placeholderTextColor="#9CA3AF"
               />
             </View>
 
@@ -50,7 +120,7 @@ export default function EditProfile() {
               <TextInput
                 placeholder="Email baru..."
                 className="bg-gray-100 p-4 rounded-full text-black"
-                placeholderTextColor="#9CA3AF" // gray-400
+                placeholderTextColor="#9CA3AF"
                 keyboardType="email-address"
               />
             </View>
@@ -60,7 +130,7 @@ export default function EditProfile() {
               <TextInput
                 placeholder="Masukkan batasan pengeluaran..."
                 className="bg-gray-100 p-4 rounded-full text-black"
-                placeholderTextColor="#9CA3AF" // gray-400
+                placeholderTextColor="#9CA3AF"
                 keyboardType="numeric"
               />
             </View>
@@ -72,19 +142,30 @@ export default function EditProfile() {
         </ScrollView>
         {/* Buttons Section */}
         <View className="flex-row justify-around items-center">
-            <TouchableOpacity
-            className="border-2 border-[#CD6D1A] rounded-full py-4 px-14"
-            onPress={() => navigation.goBack()} // Atau logika batal lainnya
-            >
+          <TouchableOpacity
+          className="border-2 border-[#CD6D1A] rounded-full py-4 px-14"
+          onPress={() => navigation.goBack()}
+          >
             <Text className="text-xl text-[#CD6D1A] font-psemibold">Batal</Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-            className="bg-[#CD6D1A] rounded-full py-4 px-14"
-            onPress={() => { alert('Simpan ditekan!'); }}
-            >
+          <TouchableOpacity
+          className="bg-[#CD6D1A] rounded-full py-4 px-14"
+          onPress={() => { 
+            Alert.alert(
+              'Yeayy!!',
+              'Profil berhasil diperbarui',
+              [
+                {
+                  text: 'OK',
+                  onPress: () => navigation.goBack(),
+                },
+              ]
+            );
+            }}
+          >
             <Text className="text-xl text-white font-psemibold">Simpan</Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

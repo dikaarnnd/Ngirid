@@ -35,7 +35,7 @@ export default function Login() {
             <Text className='text-center text-[#CD6D1A] text-2xl font-pbold'>Sign-in with Google</Text>
           </TouchableOpacity>
           <TouchableOpacity className='bg-[#CD6D1A] rounded-full p-4 mb-4'
-            onPress={() => navigation.replace('MainTabs')}>
+            onPress={() => navigation.navigate('MainTabs')}>
             <Text className='text-center text-white text-2xl font-pbold'>Masuk</Text>
           </TouchableOpacity>
           <TouchableOpacity className='border-4 border-[#CD6D1A] rounded-full p-4 mb-4'
