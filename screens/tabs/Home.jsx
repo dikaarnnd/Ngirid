@@ -10,7 +10,7 @@ import HistoryList from '../../components/HistoryList';
 export default function Home() {
   return (
     <SafeAreaProvider>
-      <SafeAreaView className='flex-1 justify-between gap-3 mx-3 mb-3'>
+      <SafeAreaView className='flex-1 justify-between gap-3 px-3 mb-3 bg-white'>
         {/* TopBar */}
           <View className='flex flex-row items-center'>
             <TopBar />

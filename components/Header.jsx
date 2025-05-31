@@ -1,14 +1,16 @@
-import { View, Text } from 'react-native'
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
-export default function Header() {
+const backArrowIcon = require('../assets/images/back_arrow.png');
+
+export default function Header({ headerName}) {
+  const navigation = useNavigation();
   return (
-    <SafeAreaProvider>
-        <SafeAreaView>
-            <View>
-        <Text>Header</Text>
-        </View>
-        </SafeAreaView>
-    </SafeAreaProvider>
+    <View className="flex-row items-center p-4">
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Image source={backArrowIcon} className="w-8 h-8" />
+      </TouchableOpacity>
+      <Text className="flex-1 text-center text-xl font-pbold text-black mr-8">{headerName}</Text>
+    </View>
   )
 }

@@ -4,7 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
-const backArrowIcon = require('../../assets/images/back_arrow.png'); 
+import Header from 'components/Header';
+
 const defaultAvatar = require('../../assets/icons/user.png'); 
 
 export default function EditProfile() {
@@ -77,12 +78,7 @@ export default function EditProfile() {
     <SafeAreaProvider>
       <SafeAreaView className="flex-1 bg-white">
         {/* Header */}
-        <View className="flex-row items-center p-4">
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image source={backArrowIcon} className="w-8 h-8" />
-          </TouchableOpacity>
-          <Text className="flex-1 text-center text-xl font-pbold text-black mr-8">Edit Profil</Text>
-        </View>
+        <Header headerName="Edit Profil" />
 
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
           {/* Profile Picture Section */}

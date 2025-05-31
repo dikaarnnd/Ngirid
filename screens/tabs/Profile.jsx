@@ -3,6 +3,8 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 
+import Header from 'components/Header';
+
 import '../../global.css';
 
 export default function Profile() {
@@ -24,17 +26,7 @@ export default function Profile() {
     <SafeAreaProvider>
       <SafeAreaView className='flex-1 bg-white'>
         {/* Header */}
-        <View className='flex-row items-center p-4'>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              source={require('../../assets/images/back_arrow.png')} 
-              className="w-8 h-8" 
-            />
-          </TouchableOpacity>
-          <View className='flex-1 justify-center items-center'>
-            <Text className='text-center text-black text-2xl font-pbold mr-8'>Profil</Text> 
-          </View>
-        </View>
+        <Header headerName="Profil" />
 
         {/* Profile Info */}
         <View className='items-center mt-8 mb-6'>

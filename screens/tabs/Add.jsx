@@ -4,13 +4,16 @@ import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
+import Switch from 'components/Switch';
+import Header from 'components/Header';
+
 export default function Add() {
   return (
     <SafeAreaProvider>
-      <SafeAreaView>
-        <View className="flex-1 justify-center items-center">
-          <Text>Add Screen</Text>
-        </View>
+      <SafeAreaView className='flex-1 bg-white'>
+        <Header headerName="Tambah"/>
+        {/* Switch */}
+        <Switch />
       </SafeAreaView>
     </SafeAreaProvider>
   );

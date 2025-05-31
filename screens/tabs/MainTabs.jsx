@@ -66,7 +66,7 @@ const MainLayout = () => {
           name="Add" 
           component={Add} 
           options={{ 
-            // headerShown: false,
+            headerShown: false,
             tabBarStyle: { display: 'none' },
             tabBarIcon: ({focused}) => (
               <TabIcon
