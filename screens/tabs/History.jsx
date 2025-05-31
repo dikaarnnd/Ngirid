@@ -16,7 +16,7 @@ export default function History() {
 
         {/* History */}
         <View className="flex-1 bg-[#8D2B18] rounded-2xl">
-          <Text className="text-sm text-white font-pregular pl-4 my-4">Laporan Keuangan</Text>
+          <Text className="text-sm text-white font-pregular pl-4 mt-6 mb-4">Laporan Keuangan</Text>
           <View className='flex-1'>
             <HistoryList />
           </View>

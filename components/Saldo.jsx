@@ -13,7 +13,7 @@ export default function Saldo() {
     }).format(number);
 
   return (
-    <View className="flex bg-[#188D35] rounded-2xl py-4 overflow-hidden">
+    <View className="flex bg-[#188D35] rounded-2xl py-6 overflow-hidden">
       <Image
         source={require('../assets/images/onboarding.png')}
         className="absolute w-64 h-64 -z-10 opacity-10 rotate-45"

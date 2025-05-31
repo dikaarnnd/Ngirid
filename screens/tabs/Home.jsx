@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
@@ -25,7 +25,7 @@ export default function Home() {
           <Exp />
 
           {/* History */}
-          <View className="bg-[#8D2B18] rounded-2xl pt-4 pb-2">
+          <View className="bg-[#8D2B18] rounded-2xl pt-6 pb-2">
             <Text className="text-sm text-white font-pregular pl-4 mb-3">Laporan Keuangan</Text>
             <View>
               <HistoryList showLimit={true} />
