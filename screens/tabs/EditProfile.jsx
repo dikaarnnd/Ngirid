@@ -1,11 +1,10 @@
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
 
 
 const backArrowIcon = require('../../assets/images/back_arrow.png'); 
-const defaultAvatar = require('../../assets/images/default_avatar.png'); 
+const defaultAvatar = require('../../assets/icons/user.png'); 
 
 export default function EditProfile() {
   const navigation = useNavigation();
@@ -77,14 +76,14 @@ export default function EditProfile() {
             className="border-2 border-[#CD6D1A] rounded-full py-4 px-14"
             onPress={() => navigation.goBack()} // Atau logika batal lainnya
             >
-            <Text className="text-xl text-[#CD6D1A] text-base font-psemibold">Batal</Text>
+            <Text className="text-xl text-[#CD6D1A] font-psemibold">Batal</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
             className="bg-[#CD6D1A] rounded-full py-4 px-14"
             onPress={() => { alert('Simpan ditekan!'); }}
             >
-            <Text className="text-xl text-white text-base font-psemibold">Simpan</Text>
+            <Text className="text-xl text-white font-psemibold">Simpan</Text>
             </TouchableOpacity>
         </View>
       </SafeAreaView>

@@ -32,7 +32,7 @@ export default function Profile() {
           <View className='w-28 h-28 justify-center items-center mb-4'>
             {/* Placeholder for profile image, you can replace this with an Image component if you have the user's photo */}
             <Image
-              source={require('../../assets/images/default_avatar.png')} // Ganti dengan path ke gambar avatar default Anda
+              source={require('../../assets/icons/user.png')} // Ganti dengan path ke gambar avatar default Anda
               className="w-28 h-28 rounded-full"
             />
           </View>
