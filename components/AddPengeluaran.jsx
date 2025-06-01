@@ -5,10 +5,11 @@ import * as ImagePicker from 'expo-image-picker';
 
 export default function AddPengeluaran() {
   const navigation = useNavigation();
-  const maxNoteLength = 17;
+  const maxNoteLength = 15;
   const [userData, setUserData] = useState({
-    addPengeluaran: '',
-    noteExp: '',
+    type: 'expense',
+    amount: '',
+    note: '',
     photoUrl: null,
     date: new Date().toISOString().split('T')[0],
   });
@@ -24,15 +25,15 @@ export default function AddPengeluaran() {
   const handlePengeluaranChange = (text) => {
     const cleanValue = text.replace(/\D/g, '');
     console.log('Input pengeluaran berubah:', cleanValue);
-    setUserData({...userData, addPengeluaran: cleanValue});
+    setUserData({...userData, amount: cleanValue});
   };
 
   const handleSave = async () => {
-    if (!userData.addPengeluaran || !userData.noteExp) {
+    if (!userData.amount || !userData.note) {
       let errorMessage = '';
-      if (!userData.addPengeluaran && !userData.noteExp) {
+      if (!userData.amount && !userData.note) {
         errorMessage = 'Jumlah pengeluaran dan catatan harus diisi';
-      } else if (!userData.addPengeluaran) {
+      } else if (!userData.amount) {
         errorMessage = 'Jumlah pengeluaran harus diisi';
       } else {
         errorMessage = 'Catatan harus diisi';
@@ -42,7 +43,7 @@ export default function AddPengeluaran() {
       return;
     }
 
-    const pengeluaranValue = parseInt(userData.addPengeluaran);
+    const pengeluaranValue = parseInt(userData.amount);
     if (pengeluaranValue < 100) {
       Alert.alert(
         'Jumlah Tidak Valid',
@@ -53,7 +54,7 @@ export default function AddPengeluaran() {
     }
     console.log('Data yang akan disimpan:', {
       ...userData,
-      addPengeluaran: pengeluaranValue
+      amount: pengeluaranValue
     });
     Alert.alert(
       'Yeayy!!',
@@ -62,8 +63,8 @@ export default function AddPengeluaran() {
         onPress: () => {
           navigation.goBack();
           setUserData({
-            addPengeluaran: '',
-            noteExp: '',
+            amount: '',
+            note: '',
             photoUrl: null,
             date: new Date().toISOString().split('T')[0],
           });
@@ -82,8 +83,8 @@ export default function AddPengeluaran() {
           text: 'Ya',
           onPress: () => {
             setUserData({
-              addPengeluaran: '',
-              noteExp: '',
+              amount: '',
+              note: '',
               photoUrl: null,
               date: null,
             });
@@ -164,7 +165,7 @@ export default function AddPengeluaran() {
               className="bg-gray-200 p-4 rounded-xl font-pregular text-[15px]"
               placeholderTextColor="#9CA3AF"
               keyboardType="numeric"
-              value={formatRupiah(userData.addPengeluaran)}
+              value={formatRupiah(userData.amount)}
               onChangeText={handlePengeluaranChange}
             />
           </View>
@@ -172,15 +173,15 @@ export default function AddPengeluaran() {
             <View className='flex-row justify-between items-center'>
               <Text className="text[15px] text-white mb-1 ml-1 font-psemibold">Digunakan untuk apa?</Text>
               <Text className="text-white text-xs text-right mr-1 ">
-                {userData.noteExp.length}/{maxNoteLength}
+                {userData.note.length}/{maxNoteLength}
               </Text>
             </View>
             <TextInput
             placeholder='Beli jajan'
               className="bg-gray-200 p-4 rounded-xl font-pregular text-[15px]"
               placeholderTextColor="#9CA3AF"
-              value={userData.noteExp}
-              onChangeText={(text) => setUserData({...userData, noteExp: text})}
+              value={userData.note}
+              onChangeText={(text) => setUserData({...userData, note: text})}
               maxLength={maxNoteLength}
             />
           </View>

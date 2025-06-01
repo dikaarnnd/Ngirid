@@ -5,10 +5,11 @@ import * as ImagePicker from 'expo-image-picker';
 
 export default function AddSaldo() {
   const navigation = useNavigation();
-  const maxNoteLength = 17;
+  const maxNoteLength = 15;
   const [userData, setUserData] = useState({
-    addSaldo: '',
-    noteInc: '',
+    type: 'income',
+    amount: '',
+    note: '',
     photoUrl: null,
     date: new Date().toISOString().split('T')[0],
   });
@@ -24,15 +25,15 @@ export default function AddSaldo() {
   const handleSaldoChange = (text) => {
     const cleanValue = text.replace(/\D/g, '');
     console.log('Input saldo berubah:', cleanValue);
-    setUserData({...userData, addSaldo: cleanValue});
+    setUserData({...userData, amount: cleanValue});
   };
 
   const handleSave = async () => {
-    if (!userData.addSaldo || !userData.noteInc) {
+    if (!userData.amount || !userData.note) {
       let errorMessage = '';
-      if (!userData.addSaldo && !userData.noteInc) {
+      if (!userData.amount && !userData.note) {
         errorMessage = 'Jumlah saldo dan catatan harus diisi';
-      } else if (!userData.addSaldo) {
+      } else if (!userData.amount) {
         errorMessage = 'Jumlah saldo harus diisi';
       } else {
         errorMessage = 'Catatan harus diisi';
@@ -42,7 +43,7 @@ export default function AddSaldo() {
       return;
     }
 
-    const saldoValue = parseInt(userData.addSaldo);
+    const saldoValue = parseInt(userData.amount);
     if (saldoValue < 100) {
       Alert.alert(
         'Jumlah Tidak Valid',
@@ -53,7 +54,7 @@ export default function AddSaldo() {
     }
     console.log('Data yang akan disimpan:', {
       ...userData,
-      addSaldo: saldoValue
+      amount: saldoValue
     });
     Alert.alert(
       'Yeayy!!',
@@ -62,8 +63,8 @@ export default function AddSaldo() {
         onPress: () => {
           navigation.goBack();
           setUserData({
-            addSaldo: '',
-            noteInc: '',
+            amount: '',
+            note: '',
             photoUrl: null,
             date: new Date().toISOString().split('T')[0],
           });
@@ -82,8 +83,8 @@ export default function AddSaldo() {
           text: 'Ya',
           onPress: () => {
             setUserData({
-              addSaldo: '',
-              noteInc: '',
+              amount: '',
+              note: '',
               photoUrl: null,
               date: null,
             });
@@ -164,7 +165,7 @@ export default function AddSaldo() {
               className="bg-gray-200 p-4 rounded-xl font-pregular text-[15px]"
               placeholderTextColor="#9CA3AF"
               keyboardType="numeric"
-              value={formatRupiah(userData.addSaldo)}
+              value={formatRupiah(userData.amount)}
               onChangeText={handleSaldoChange}
             />
           </View>
@@ -172,15 +173,15 @@ export default function AddSaldo() {
             <View className='flex-row justify-between items-center'>
               <Text className="text[15px] text-white mb-1 ml-1 font-psemibold">Tambahkan catatan</Text>
               <Text className="text-white text-xs text-right mr-1 ">
-                {userData.noteInc.length}/{maxNoteLength}
+                {userData.note.length}/{maxNoteLength}
               </Text>
             </View>
             <TextInput
             placeholder='Gajian bulan ini'
               className="bg-gray-200 p-4 rounded-xl font-pregular text-[15px]"
               placeholderTextColor="#9CA3AF"
-              value={userData.noteInc}
-              onChangeText={(text) => setUserData({...userData, noteInc: text})}
+              value={userData.note}
+              onChangeText={(text) => setUserData({...userData, note: text})}
               maxLength={maxNoteLength}
             />
           </View>

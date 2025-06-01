@@ -14,7 +14,8 @@ import ProfileScreen from './screens/tabs/Profile';
 import EditProfileScreen from './screens/tabs/EditProfile';
 import HistoryScreen from './screens/tabs/History';
 import AddScreen from './screens/tabs/Add';
-import EditScreen from './screens/tabs/Edit';
+import EditIncScreen from './screens/tabs/EditSaldo';
+import EditExpScreen from './screens/tabs/EditPengeluaran';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,8 +57,9 @@ export default function App() {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         <Stack.Screen name="Add" component={AddScreen} />
-        <Stack.Screen name="Edit" component={EditScreen} />
         <Stack.Screen name="History" component={HistoryScreen} />
+        <Stack.Screen name="EditSaldo" component={EditIncScreen} />
+        <Stack.Screen name="EditPengeluaran" component={EditExpScreen} />
         <Stack.Screen name="MainTabs" component={MainTabs} />
       </Stack.Navigator>
     </NavigationContainer>
