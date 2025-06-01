@@ -42,11 +42,11 @@ export default function HistoryList({ showLimit = false }) {
     return `${year}/${month}/${day}`;
   };
 
-  // const formatRupiah = (number) =>
-  //   new Intl.NumberFormat('id-ID', {
-  //     style: 'currency',
-  //     currency: 'IDR',
-  //   }).format(number);
+  const formatRupiah = (number) =>
+    new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(number);
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -56,12 +56,12 @@ export default function HistoryList({ showLimit = false }) {
       <Text className="text-sm text-white font-psemibold">{formatDate(item.date)}</Text>
       <Text className="text-sm text-white font-psemibold">{item.note}</Text>
       <Text
-        className={`text-base font-bold ${
+        className={`text-sm font-psemibold ${
           item.type === 'income' ? 'text-green-600' : 'text-red-600'
         }`}
       >
-        {/* {formatRupiah(item.price)} */}
-        {item.price}
+        {formatRupiah(item.price)}
+        {/* {item.price} */}
       </Text>
     </TouchableOpacity>
   );

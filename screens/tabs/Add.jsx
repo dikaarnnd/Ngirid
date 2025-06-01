@@ -3,12 +3,10 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect, useRef } from 'react';
 
-import Header from 'components/Header';
 import AddSaldo from 'components/AddSaldo';
 import AddPengeluaran from 'components/AddPengeluaran';
 
 export default function Add() {
-  const navigation = useNavigation();
   const [enabled, setEnabled] = useState(false);
   const translateX = useRef(new Animated.Value(0)).current;
 
@@ -27,8 +25,9 @@ export default function Add() {
   return (
     <SafeAreaProvider>
       <SafeAreaView className='flex-1 bg-white'>
-        {/* Header */}
-        <Header headerName="Tambah"/>
+        <View className="flex items-center p-4">
+          <Text className="text-center text-xl font-pbold text-black">Tambah</Text>
+        </View>
 
         {/* Content */}
         <View className='flex-row items-center px-3'>
