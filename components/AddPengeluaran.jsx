@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, TextInput, Alert, } from 'react-native';
+import { View, Text, TouchableOpacity, Image, TextInput, Alert, ScrollView, Modal } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
@@ -13,6 +13,18 @@ export default function AddPengeluaran() {
     photoUrl: null,
     date: new Date().toISOString().split('T')[0],
   });
+
+  const [isImageViewerVisible, setImageViewerVisible] = useState(false);
+  
+  const openImageViewer = () => {
+    if (userData.photoUrl) {
+      setImageViewerVisible(true);
+    }
+  };
+
+  const closeImageViewer = () => {
+    setImageViewerVisible(false);
+  };
 
   const formatRupiah = (value) => {
     const cleanValue = value.replace(/\D/g, '');
@@ -155,97 +167,126 @@ export default function AddPengeluaran() {
   };
   
   return (
-    <View className='flex-1 justify-between'>
-      <View className='flex-1'>
-        <View className='px-3 py-5 my-4 mx-3 rounded-2xl bg-[#2477CA] gap-4'>
-          <View>
-            <Text className="text[15px] text-white mb-1 ml-1 font-psemibold">Berapa pengeluaran Anda?</Text>
-            <TextInput
-              placeholder='Rp'
-              className="bg-gray-200 p-4 rounded-xl font-pregular text-[15px]"
-              placeholderTextColor="#9CA3AF"
-              keyboardType="numeric"
-              value={formatRupiah(userData.amount)}
-              onChangeText={handlePengeluaranChange}
-            />
-          </View>
-          <View>
-            <View className='flex-row justify-between items-center'>
-              <Text className="text[15px] text-white mb-1 ml-1 font-psemibold">Digunakan untuk apa?</Text>
-              <Text className="text-white text-xs text-right mr-1 ">
-                {userData.note.length}/{maxNoteLength}
-              </Text>
+    <View className='flex-1'>
+      <View className='flex-1 justify-between'>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
+          <View className='px-3 py-5 mb-4 mx-3 rounded-2xl bg-[#2477CA] gap-4'>
+            <View>
+              <Text className="text[15px] text-white mb-1 ml-1 font-psemibold">Berapa pengeluaran Anda?</Text>
+              <TextInput
+                placeholder='Rp'
+                className="bg-gray-200 p-4 rounded-xl font-pregular text-[15px]"
+                placeholderTextColor="#9CA3AF"
+                keyboardType="numeric"
+                value={formatRupiah(userData.amount)}
+                onChangeText={handlePengeluaranChange}
+              />
             </View>
-            <TextInput
-            placeholder='Beli jajan'
-              className="bg-gray-200 p-4 rounded-xl font-pregular text-[15px]"
-              placeholderTextColor="#9CA3AF"
-              value={userData.note}
-              onChangeText={(text) => setUserData({...userData, note: text})}
-              maxLength={maxNoteLength}
-            />
+            <View>
+              <View className='flex-row justify-between items-center'>
+                <Text className="text[15px] text-white mb-1 ml-1 font-psemibold">Digunakan untuk apa?</Text>
+                <Text className="text-white text-xs text-right mr-1 ">
+                  {userData.note.length}/{maxNoteLength}
+                </Text>
+              </View>
+              <TextInput
+              placeholder='Beli jajan'
+                className="bg-gray-200 p-4 rounded-xl font-pregular text-[15px]"
+                placeholderTextColor="#9CA3AF"
+                value={userData.note}
+                onChangeText={(text) => setUserData({...userData, note: text})}
+                maxLength={maxNoteLength}
+              />
+            </View>
+          </View>
+          {userData.photoUrl ? (
+            <View className="mx-3 gap-2 ">
+              <View className='flex-row w-full gap-2'>
+                <TouchableOpacity
+                  className="flex-1 flex-row py-5 justify-center items-center border border-black border-dashed"
+                  onPress={handleChangePhoto}
+                >
+                  <Image
+                    source={require('../assets/icons/camera.png')}
+                    className="w-6 h-6 mr-2"
+                  />
+                  <Text>Ubah foto</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="px-3 justify-center items-center"
+                  onPress={handleRemovePhoto}
+                >
+                  <Image
+                    source={require('../assets/icons/trash.png')}
+                    className="w-8 h-8"
+                  />
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity onPress={openImageViewer}>
+                  <Image
+                    source={{ uri: userData.photoUrl }}
+                    className="w-full h-64 rounded-xl"
+                    resizeMode="cover"
+                  />
+                </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity
+              className="flex-row mx-3 py-5 justify-center items-center border border-black border-dashed"
+              onPress={handleChangePhoto}
+            >
+              <Image
+                source={require('../assets/icons/camera.png')}
+                className="w-6 h-6 mr-2"
+              />
+              <Text>Tambahkan foto (Opsional)</Text>
+            </TouchableOpacity>
+          )}
+        </ScrollView>
+
+        <View className='mb-3 mt-3'>
+          <View className="flex-row justify-around items-center">
+            <TouchableOpacity
+            className="border-2 border-[#CD6D1A] rounded-full py-4 px-14"
+            onPress={handleCancel}
+            >
+              <Text className="text-xl text-[#CD6D1A] font-psemibold">Batal</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            className="bg-[#CD6D1A] rounded-full py-4 px-14"
+            onPress={ handleSave }
+            >
+              <Text className="text-xl text-white font-psemibold">Simpan</Text>
+            </TouchableOpacity>
           </View>
         </View>
-        {userData.photoUrl ? (
-          <View className="mx-3 gap-2 ">
-            <View className='flex-row w-full gap-2'>
-              <TouchableOpacity
-                className="flex-1 flex-row py-5 justify-center items-center border border-black border-dashed"
-                onPress={handleChangePhoto}
-              >
-                <Image
-                  source={require('../assets/icons/camera.png')}
-                  className="w-6 h-6 mr-2"
-                />
-                <Text>Ubah foto</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                className="px-3 justify-center items-center"
-                onPress={handleRemovePhoto}
-              >
-                <Image
-                  source={require('../assets/icons/trash.png')}
-                  className="w-8 h-8"
-                />
-              </TouchableOpacity>
-            </View>
+      </View>
+
+      {userData.photoUrl && (
+        <Modal
+          visible={isImageViewerVisible}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={closeImageViewer} // Untuk tombol back Android
+        >
+          <View className="flex-1 justify-center items-center bg-black/90">
             <Image
               source={{ uri: userData.photoUrl }}
-              className="w-full h-3/5 rounded-xl"
-              resizeMode="cover"
+              className="w-full h-full"
+              resizeMode="contain"
             />
+            <TouchableOpacity
+              className="absolute ios:top-[60px] android:top-[30px] right-[20px] bg-white/20 px-[15px] py-2 rounded-[20px]"
+              onPress={closeImageViewer}
+            >
+              <Text className="text-white text-base font-bold">Tutup</Text>
+            </TouchableOpacity>
           </View>
-        ) : (
-          <TouchableOpacity
-            className="flex-row mx-3 py-5 justify-center items-center border border-black border-dashed"
-            onPress={handleChangePhoto}
-          >
-            <Image
-              source={require('../assets/icons/camera.png')}
-              className="w-6 h-6 mr-2"
-            />
-            <Text>Tambahkan foto (Opsional)</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-
-      <View className='mb-3'>
-        <View className="flex-row justify-around items-center">
-          <TouchableOpacity
-          className="border-2 border-[#CD6D1A] rounded-full py-4 px-14"
-          onPress={handleCancel}
-          >
-            <Text className="text-xl text-[#CD6D1A] font-psemibold">Batal</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-          className="bg-[#CD6D1A] rounded-full py-4 px-14"
-          onPress={ handleSave }
-          >
-            <Text className="text-xl text-white font-psemibold">Simpan</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        </Modal>
+      )}
     </View>
   )
 }

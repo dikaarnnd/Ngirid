@@ -1,9 +1,6 @@
 import { Text, TouchableOpacity, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import EditSaldo from 'screens/tabs/EditSaldo';
-import EditPengeluaran from 'screens/tabs/EditPengeluaran';
-
 export default function HistoryList({ showLimit = false }) {
   const navigation = useNavigation();
 

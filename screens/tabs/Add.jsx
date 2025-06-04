@@ -30,7 +30,7 @@ export default function Add() {
         </View>
 
         {/* Content */}
-        <View className='flex-row items-center px-3'>
+        <View className='flex-row items-center px-3 mb-4'>
           <TouchableOpacity
             onPress={toggleSwitch}
             activeOpacity={0.8}

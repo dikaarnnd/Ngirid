@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, TextInput, Alert, } from 'react-native';
+import { View, Text, TouchableOpacity, Image, TextInput, Alert, ScrollView, Modal } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -17,6 +17,18 @@ export default function EditSaldo() {
     photoUrl: initialData?.photoUrl || null,
     date: initialData?.date || new Date().toISOString().split('T')[0],
   });
+
+  const [isImageViewerVisible, setImageViewerVisible] = useState(false);
+
+  const openImageViewer = () => {
+    if (userData.photoUrl) {
+      setImageViewerVisible(true);
+    }
+  };
+
+  const closeImageViewer = () => {
+    setImageViewerVisible(false);
+  };
 
   const formatRupiah = (value) => {
     const cleanValue = value.replace(/\D/g, '');
@@ -134,8 +146,6 @@ export default function EditSaldo() {
     );
   };
 
-
-
   const handleChangePhoto = () => {
     Alert.alert('Pilih Sumber Foto', 'Silakan pilih dari kamera atau galeri', [
       {
@@ -197,12 +207,16 @@ export default function EditSaldo() {
           <Text className="text-center text-xl font-pbold text-black">Edit Saldo</Text>
         </View>
         <View className='flex-1 justify-between'>
-          <View className='flex-1'>
-            <View className='px-3 py-5 my-4 mx-3 rounded-2xl bg-[#188D35] gap-4'>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+          >
+            <View className="px-3 py-5 my-4 mx-3 rounded-2xl bg-[#188D35] gap-4">
               <View>
-                <Text className="text[15px] text-white mb-1 ml-1 font-psemibold">Berapa pemasukan Anda?</Text>
+                <Text className="text[15px] text-white mb-1 ml-1 font-psemibold">
+                  Berapa pemasukan Anda?
+                </Text>
                 <TextInput
-                  placeholder='Rp'
+                  placeholder="Rp"
                   className="bg-gray-200 p-4 rounded-xl font-pregular text-[15px]"
                   placeholderTextColor="#9CA3AF"
                   keyboardType="numeric"
@@ -211,25 +225,30 @@ export default function EditSaldo() {
                 />
               </View>
               <View>
-                <View className='flex-row justify-between items-center'>
-                  <Text className="text[15px] text-white mb-1 ml-1 font-psemibold">Tambahkan catatan</Text>
+                <View className="flex-row justify-between items-center">
+                  <Text className="text[15px] text-white mb-1 ml-1 font-psemibold">
+                    Tambahkan catatan
+                  </Text>
                   <Text className="text-white text-xs text-right mr-1 ">
                     {userData.note.length}/{maxNoteLength}
                   </Text>
                 </View>
                 <TextInput
-                placeholder='Gajian bulan ini'
+                  placeholder="Gajian bulan ini"
                   className="bg-gray-200 p-4 rounded-xl font-pregular text-[15px]"
                   placeholderTextColor="#9CA3AF"
                   value={userData.note}
-                  onChangeText={(text) => setUserData({...userData, note: text})}
+                  onChangeText={(text) =>
+                    setUserData({ ...userData, note: text })
+                  }
                   maxLength={maxNoteLength}
                 />
               </View>
             </View>
+
             {userData.photoUrl ? (
-              <View className="mx-3 gap-2 ">
-                <View className='flex-row w-full gap-2'>
+              <View className="mx-3 gap-2">
+                <View className="flex-row w-full gap-2">
                   <TouchableOpacity
                     className="flex-1 flex-row py-5 justify-center items-center border border-black border-dashed"
                     onPress={handleChangePhoto}
@@ -250,11 +269,13 @@ export default function EditSaldo() {
                     />
                   </TouchableOpacity>
                 </View>
-                <Image
-                  source={{ uri: userData.photoUrl }}
-                  className="w-full h-3/5 rounded-xl"
-                  resizeMode="cover"
-                />
+                <TouchableOpacity onPress={openImageViewer}>
+                  <Image
+                    source={{ uri: userData.photoUrl }}
+                    className="w-full h-64 rounded-xl"
+                    resizeMode="cover"
+                  />
+                </TouchableOpacity>
               </View>
             ) : (
               <TouchableOpacity
@@ -268,9 +289,9 @@ export default function EditSaldo() {
                 <Text>Tambahkan foto (Opsional)</Text>
               </TouchableOpacity>
             )}
-          </View>
+          </ScrollView>
 
-          <View className='mb-3 gap-2'>
+          <View className='mb-3 gap-2 mt-3'>
             <TouchableOpacity
               className="mx-3 py-3 rounded-full justify-center items-center bg-red-600"
               onPress={handleRemoveList}
@@ -295,6 +316,29 @@ export default function EditSaldo() {
             </View>
           </View>
         </View>
+
+        {userData.photoUrl && (
+          <Modal
+            visible={isImageViewerVisible}
+            transparent={true}
+            animationType="fade"
+            onRequestClose={closeImageViewer} // Untuk tombol back Android
+          >
+            <View className="flex-1 justify-center items-center bg-black/90">
+              <Image
+                source={{ uri: userData.photoUrl }}
+                className="w-full h-full"
+                resizeMode="contain"
+              />
+              <TouchableOpacity
+                className="absolute ios:top-[60px] android:top-[30px] right-[20px] bg-white/20 px-[15px] py-2 rounded-[20px]"
+                onPress={closeImageViewer}
+              >
+                <Text className="text-white text-base font-bold">Tutup</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
+        )}
       </SafeAreaView>
     </SafeAreaProvider>
   );
