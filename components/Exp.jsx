@@ -31,7 +31,7 @@ export default function Exp() {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
       style={{ borderRadius: 16 }}
-      className='flex-1 rounded-2xl justify-center items-center pb-4'
+      className='flex rounded-2xl justify-center items-center py-4'
     >
       {/* Chart */}
       <Svg width={width} height={height-25} viewBox={`0 0 ${width} ${height-50}`}>
