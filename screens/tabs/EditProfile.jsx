@@ -76,7 +76,7 @@ export default function EditProfile() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView className="flex-1 bg-white">
+      <SafeAreaView className="flex-1">
         {/* Header */}
         <Header headerName="Edit Profil" />
 
@@ -137,7 +137,7 @@ export default function EditProfile() {
 
         </ScrollView>
         {/* Buttons Section */}
-        <View className="flex-row justify-around items-center">
+        <View className="flex-row justify-around items-center mb-4">
           <TouchableOpacity
           className="border-2 border-[#CD6D1A] rounded-full py-4 px-14"
           onPress={() => navigation.goBack()}

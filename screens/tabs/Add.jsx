@@ -24,7 +24,7 @@ export default function Add() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView className='flex-1 bg-white'>
+      <SafeAreaView className='flex-1'>
         <View className="flex items-center p-4">
           <Text className="text-center text-xl font-pbold text-black">Tambah</Text>
         </View>

@@ -14,18 +14,18 @@ export default function Login() {
           <Text className="text-2xl font-pbold mb-4">Senang bertemu kembali!</Text>
           <Text className="text-xl font-pregular mb-1">Username</Text>
           <TextInput
-            className="text-xl w-full border-none bg-gray-300 rounded-full py-3 px-4 mb-4"
+            className="text-xl w-full border-none bg-gray-300 rounded-md py-3 px-3 mb-4"
           />
           <Text className="text-xl font-pregular mb-1">Password</Text>
           <TextInput
             // placeholder="Password"
             secureTextEntry
-            className="text-xl w-full border-none bg-gray-300 rounded-full py-3 px-4"
+            className="text-xl w-full border-none bg-gray-300 rounded-md py-3 px-3"
           />
           <Text className="text-xl text-red-500 font-pregular mb-1">Lupa Password?</Text>
         </View>
 
-        <View  className='mx-3'>
+        <View className='mx-3'>
           <TouchableOpacity className='flex flex-row border-2 border-[#CD6D1A] rounded-full p-4 mb-4 justify-center items-center gap-2'
             onPress={() => navigation.navigate('Signup')}>
             <Image

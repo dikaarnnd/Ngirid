@@ -1,11 +1,7 @@
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-// import { styled } from 'nativewind';
-
 import '../../global.css';
-
-// const StyledView = styled(View)
 
 export default function AuthChoice() {
   const navigation = useNavigation();
