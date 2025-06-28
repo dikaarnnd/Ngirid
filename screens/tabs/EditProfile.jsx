@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
-import Header from 'components/Header';
+import Header from '../../components/Header';
 
 const defaultAvatar = require('../../assets/icons/user.png'); 
 

@@ -2,7 +2,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen';
 import { useEffect } from 'react';
-import {useFonts} from 'expo-font';
+import { useFonts } from 'expo-font';
+import {
+  Platform,
+  Linking,
+  DeviceEventEmitter,
+  PermissionsAndroid,
+  Alert,
+} from 'react-native';
+import RNAndroidNotificationListener from 'react-native-android-notification-listener';
 
 // screens
 import MainTabs from './screens/tabs/MainTabs';
@@ -30,7 +38,7 @@ export default function App() {
     "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
     "Poppins-SemiBold": require("./assets/fonts/Poppins-SemiBold.ttf"),
     "Poppins-Thin": require("./assets/fonts/Poppins-Thin.ttf"),
-  })
+  });
 
   useEffect(() => {
     async function hideSplashScreen() {
@@ -39,14 +47,75 @@ export default function App() {
       }
     }
 
-    if (error) {
-      throw error;
-    }
-
+    if (error) throw error;
     hideSplashScreen();
   }, [fontsLoaded, error]);
 
-  if (!fontsLoaded && !error ) return null;
+  // 🔔 Notification Access
+  useEffect(() => {
+    const requestPostNotificationPermission = async () => {
+      if (Platform.OS === 'android' && Platform.Version >= 33) {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+          );
+          console.log(granted === PermissionsAndroid.RESULTS.GRANTED
+            ? '✅ Izin POST_NOTIFICATIONS diberikan'
+            : '❌ Izin POST_NOTIFICATIONS ditolak');
+        } catch (err) {
+          console.warn('❗ Gagal meminta izin POST_NOTIFICATIONS:', err);
+        }
+      }
+    };
+
+    const checkNotificationAccess = async () => {
+      try {
+        const status = await RNAndroidNotificationListener.getPermissionStatus();
+        console.log('🔍 Status Akses Notifikasi:', status);
+
+        if (status !== 'authorized') {
+          Alert.alert(
+            'Akses Notifikasi',
+            'Izinkan aplikasi membaca notifikasi agar fitur berjalan maksimal.',
+            [
+              {
+                text: 'Buka Pengaturan',
+                onPress: async () => {
+                  try {
+                    await RNAndroidNotificationListener.requestPermission();
+                    console.log('✅ Selesai buka pengaturan');
+                  } catch (e) {
+                    console.warn('❌ Gagal buka pengaturan:', e);
+                  }
+                },
+              },
+              { text: 'Batal', style: 'cancel' },
+            ],
+            { cancelable: true }
+          );
+        }
+      } catch (err) {
+        console.warn('❗ Gagal mengecek status notifikasi:', err);
+      }
+    };
+
+    requestPostNotificationPermission().then(checkNotificationAccess);
+
+    // Listen to foreground notifications
+    const subscription = DeviceEventEmitter.addListener(
+      'onNotificationReceived',
+      (event: any) => {
+        console.log('📥 Notifikasi diterima (foreground):', JSON.stringify(event, null, 2));
+      }
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  if (!fontsLoaded && !error) return null;
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="AuthChoice" screenOptions={{ headerShown: false }}>

@@ -3,7 +3,7 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 
-import Header from 'components/Header';
+import Header from '../../components/Header';
 
 import '../../global.css';
 

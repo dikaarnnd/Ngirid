@@ -3,8 +3,8 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect, useRef } from 'react';
 
-import AddSaldo from 'components/AddSaldo';
-import AddPengeluaran from 'components/AddPengeluaran';
+import AddSaldo from '../../components/AddSaldo';
+import AddPengeluaran from '../../components/AddPengeluaran';
 
 export default function Add() {
   const [enabled, setEnabled] = useState(false);
