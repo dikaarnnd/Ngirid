@@ -11,14 +11,24 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-community/datetimepicker": "^8.4.2",
     "@react-navigation/bottom-tabs": "^7.3.13",
     "@react-navigation/native": "^7.1.8",
     "@react-navigation/native-stack": "^7.3.12",
+    "axios": "^1.10.0",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "expo": "^53.0.8",
     "expo-font": "~13.3.1",
+    "expo-image-picker": "~16.1.4",
     "expo-linear-gradient": "~14.1.4",
     "expo-status-bar": "~2.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.1",
     "nativewind": "^4.1.23",
+    "oracledb": "^6.8.0",
     "react": "19.0.0",
     "react-native": "0.79.2",
     "react-native-paper": "^5.14.5",
@@ -26,8 +36,7 @@
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
     "react-native-splash-screen": "^3.3.0",
-    "react-native-svg": "^15.11.2",
-    "expo-image-picker": "~16.1.4"
+    "react-native-svg": "^15.11.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -41,5 +50,9 @@
     "typescript": "~5.8.3"
   },
   "main": "node_modules/expo/AppEntry.js",
-  "private": true
+  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

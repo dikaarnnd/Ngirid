@@ -3,6 +3,7 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function EditSaldo() {
   const navigation = useNavigation();
@@ -10,6 +11,10 @@ export default function EditSaldo() {
 
   const route = useRoute();
   const { initialData } = route.params || {};
+  useEffect(() => {
+    console.log('Initial data:', initialData);
+  }, []);
+
   const [userData, setUserData] = useState({
     type: 'income',
     amount: initialData?.amount || '',
@@ -36,9 +41,9 @@ export default function EditSaldo() {
     if (!userData.amount || !userData.note) {
       let errorMessage = '';
       if (!userData.amount && !userData.note) {
-        errorMessage = 'Jumlah saldo dan catatan harus diisi';
+        errorMessage = 'Jumlah pengeluaran dan catatan harus diisi';
       } else if (!userData.amount) {
-        errorMessage = 'Jumlah saldo harus diisi';
+        errorMessage = 'Jumlah pengeluaran harus diisi';
       } else {
         errorMessage = 'Catatan harus diisi';
       }
@@ -47,36 +52,54 @@ export default function EditSaldo() {
       return;
     }
 
-    const saldoValue = parseInt(userData.amount);
-    if (saldoValue < 100) {
-      Alert.alert(
-        'Jumlah Tidak Valid',
-        'Jumlah saldo harus lebih dari Rp 100',
-        [{ text: 'OK' }]
-      );
+    const pengeluaranValue = parseInt(userData.amount);
+    if (pengeluaranValue < 100) {
+      Alert.alert('Jumlah Tidak Valid', 'Jumlah pengeluaran minimal Rp 100', [{ text: 'OK' }]);
       return;
     }
-    console.log('Data yang akan disimpan:', {
-      ...userData,
-      amount: saldoValue
-    });
-    Alert.alert(
-      'Yeayy!!',
-      'Saldo berhasil diperbarui',
-      [{ text: 'OK',
-        onPress: () => {
-          navigation.goBack();
-          setUserData({
-            type: '',
-            amount: '',
-            note: '',
-            photoUrl: null,
-            date: new Date().toISOString().split('T')[0],
-          });
+
+    try {
+      const storedUser = await AsyncStorage.getItem('userData');
+      if (!storedUser) return Alert.alert('Error', 'User belum login');
+
+      const user = JSON.parse(storedUser);
+      if (!user?.id) return Alert.alert('Error', 'User ID tidak valid');
+
+      const payload = {
+        user_id: user.id,
+        type: 'expense',
+        amount: pengeluaranValue,
+        note: userData.note,
+        date: userData.date,
+      };
+
+      const id = initialData?.id;
+      if (!id) return Alert.alert('Error', 'ID transaksi tidak valid');
+
+      const response = await axios.put(`http://192.168.43.173:3000/api/transactions/${id}`, payload);
+
+      if (response.status !== 200) {
+        console.log('Respon gagal:', response.data);
+        return Alert.alert('Gagal', response.data?.message || 'Gagal update data');
+      }
+
+      Alert.alert('Berhasil', 'Pengeluaran berhasil diperbarui', [
+        {
+          text: 'OK',
+          onPress: () => {
+            navigation.goBack();
+          },
         },
-       }]
-    );
+      ]);
+    } catch (error) {
+      console.error('Error saat update:', error);
+      const errorMessage =
+        error?.response?.data?.message || 'Terjadi kesalahan saat menyimpan data';
+      Alert.alert('Error', errorMessage);
+    }
   };
+
+
 
   const handleCancel = () => {
     Alert.alert(

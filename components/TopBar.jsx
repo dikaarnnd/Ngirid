@@ -1,15 +1,32 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
-// Dummy data
-const userData = {
-  username: 'Darrell',
-  email: 'darrell@gmail.com',
-  photoUrl: null,
-};
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TopBar = () => {
   const navigation = useNavigation();
+  const [userData, setUserData] = useState({
+    username: '',
+    email: '',
+    photoUrl: null,
+  });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem('userData');
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          setUserData(user);
+        }
+      } catch (error) {
+        console.error('❌ Gagal ambil user dari storage:', error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour >= 4 && hour < 11) return 'Selamat Pagi';

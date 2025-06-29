@@ -1,37 +1,47 @@
 import { Text, View, Image, TouchableOpacity, Switch } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Header from 'components/Header';
 
 import '../../global.css';
 
 export default function Profile() {
-  
   const navigation = useNavigation();
-  const [isSmartTrackingEnabled, setIsSmartTrackingEnabled] = React.useState(false); // State for the switch
-  
-  const toggleSwitch = () => setIsSmartTrackingEnabled(previousState => !previousState);
-  
-  // Dummy data
-  const userData = {
-    username: 'Darrell',
-    email: 'darrell@gmail.com',
+  const [isSmartTrackingEnabled, setIsSmartTrackingEnabled] = useState(false);
+  const [userData, setUserData] = useState({
+    username: '',
+    email: '',
     photoUrl: null,
-    limit: 1000000,
-  };
+  });
+
+  const toggleSwitch = () => setIsSmartTrackingEnabled(prev => !prev);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem('userData');
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          setUserData(user);
+        }
+      } catch (error) {
+        console.error('❌ Gagal ambil user dari storage:', error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <SafeAreaProvider>
       <SafeAreaView className='flex-1 bg-white'>
-        {/* Header */}
         <Header headerName="Profil" />
 
-        {/* Profile Info */}
         <View className='items-center mt-8 mb-6'>
           <View className='w-28 h-28 justify-center items-center mb-4'>
-            {/* Placeholder for profile image, you can replace this with an Image component if you have the user's photo */}
             <Image
               source={
                 userData.photoUrl
@@ -43,10 +53,9 @@ export default function Profile() {
             />
           </View>
           <Text className='text-black text-lg font-psemibold'>{userData.username}</Text>
-          <Text className='text-black font-italic text-sm'>{userData.email}</Text>
+          <Text className='text-black italic text-sm'>{userData.email}</Text>
         </View>
 
-        {/* Options */}
         <View className='mx-6 space-y-1'>
           <View className='flex-row justify-between items-center py-4 border-b border-gray-400'>
             <Text className='text-black text-base font-pregular'>Mode Smart Tracking</Text>
@@ -59,26 +68,23 @@ export default function Profile() {
             />
           </View>
 
-
           <View className='border-b border-gray-400'>
-          <TouchableOpacity
-            className='flex-row justify-between items-center py-4'
-            onPress={() => {navigation.navigate('EditProfile');}}
+            <TouchableOpacity
+              className='flex-row justify-between items-center py-4'
+              onPress={() => navigation.navigate('EditProfile')}
             >
-            <Text className='text-black text-base font-pregular'>Edit Profil</Text>
-            <Image
-              source={require('../../assets/images/right_arrow.png')} 
-              className="w-4 h-4" 
-              style={{ tintColor: 'rgb(107, 114, 128)'}}
+              <Text className='text-black text-base font-pregular'>Edit Profil</Text>
+              <Image
+                source={require('../../assets/images/right_arrow.png')} 
+                className="w-4 h-4" 
+                style={{ tintColor: 'rgb(107, 114, 128)' }}
               />
-          </TouchableOpacity>
+            </TouchableOpacity>
           </View>
         </View>
 
-        {/* Spacer to push Sign Out to bottom */}
         <View className='flex-1' />
 
-        {/* Sign Out Button */}
         <View className='mx-6 mb-6 mt-4'>
           <TouchableOpacity
             className='bg-red-600 py-3 rounded-full items-center'
