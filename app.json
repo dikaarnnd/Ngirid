@@ -28,7 +28,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/adp-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.ngirid"
